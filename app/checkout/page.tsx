@@ -105,12 +105,12 @@ export default function Checkout() {
             ← Balik ke Home
           </a>
           
-          <h1 className="text-4xl font-black mb-2">Pastiin Nyaman, TRETAN.</h1>
-          <p className="text-[#1A1A1A]/70 mb-8 max-w-sm">Isi data lengkap ya biar sambal kesayangan paket liburan ke rumahmu pakghun aman.</p>
+          <h1 className="text-4xl font-black mb-2">Bungkus Satu Buat TRETAN?</h1>
+          <p className="text-[#1A1A1A]/70 mb-8 max-w-sm">Isi data lengkap ya biar sambal kesayangan paket liburan ke rumahmu pakghun aman. Tenang, privasi TRETAN terjaga kok.</p>
           
           <form id="checkout-form" onSubmit={handleCheckout} className="space-y-6">
             <div>
-              <label className="block text-sm font-bold mb-2">Nama Lengkap</label>
+              <label className="block text-sm font-bold mb-2">Nama Lengkap TRETAN</label>
               <input 
                 type="text" 
                 required
@@ -122,39 +122,39 @@ export default function Checkout() {
             </div>
             
             <div>
-              <label className="block text-sm font-bold mb-2">Nomor WhatsApp</label>
+              <label className="block text-sm font-bold mb-2">Nomor WhatsApp (Aktif Ya!)</label>
               <input 
                 type="tel" 
                 required
                 className="w-full border-2 border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#E85D04] transition-colors"
                 value={formData.phone}
                 onChange={e => setFormData({...formData, phone: e.target.value})}
-                placeholder="Misal: 08123456789 (Disambung ke resi!)"
+                placeholder="0812xxxxxx (Biar gampang kirim resi)"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-bold mb-2">Alamat Lengkap</label>
+              <label className="block text-sm font-bold mb-2">Alamat Pengiriman (Yang Jelas Ya)</label>
               <textarea 
                 required
                 rows={3}
                 className="w-full border-2 border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#E85D04] transition-colors resize-none"
                 value={formData.address}
                 onChange={e => setFormData({...formData, address: e.target.value})}
-                placeholder="Tulis alamat rumah detail, patokan warung boleh"
+                placeholder="Tulis alamat rumah detail, patokan warung atau pohon mangga juga boleh"
               />
             </div>
 
             <div className="flex gap-4 items-end">
               <div className="flex-1">
-                <label className="block text-sm font-bold mb-2">ID Kota (RajaOngkir)</label>
+                <label className="block text-sm font-bold mb-2">ID Kota (Ketik 153 buat Jakarta Selatan)</label>
                 <input 
                   type="text" 
                   required
                   className="w-full border-2 border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:border-[#E85D04] transition-colors"
                   value={formData.cityId}
                   onChange={e => setFormData({...formData, cityId: e.target.value})}
-                  placeholder="Contoh: 153 (Jkt Sel)"
+                  placeholder="ID Kota RajaOngkir"
                 />
               </div>
               <button 
@@ -163,7 +163,7 @@ export default function Checkout() {
                 className="bg-black text-white px-6 py-3 rounded-xl font-bold hover:bg-[#E85D04] transition-colors h-[52px]"
                 disabled={loadingShipping}
               >
-                {loadingShipping ? <Loader2 className="animate-spin w-5 h-5 mx-auto" /> : 'Cek Ongkir'}
+                {loadingShipping ? <Loader2 className="animate-spin w-5 h-5 mx-auto" /> : 'Cek Ongkir Dulu'}
               </button>
             </div>
 
@@ -210,8 +210,11 @@ export default function Checkout() {
               </div>
               <div className="flex-1">
                 <h3 className="font-bold leading-tight">Sambal Terasi Tretan</h3>
-                <p className="text-sm text-[#1A1A1A]/60 mt-1">1x Botol | Hot Filling 85°C</p>
-                <p className="font-black mt-2">Rp {productPrice.toLocaleString('id-ID')}</p>
+                <div className="flex flex-wrap gap-1 mt-2">
+                  <span className="text-[10px] font-bold bg-[#E85D04]/10 text-[#E85D04] px-2 py-0.5 rounded-full">pH &lt; 4.6</span>
+                  <span className="text-[10px] font-bold bg-[#E85D04]/10 text-[#E85D04] px-2 py-0.5 rounded-full">Hot Filling 85°C</span>
+                </div>
+                <p className="font-black mt-2 text-lg">Rp {productPrice.toLocaleString('id-ID')}</p>
               </div>
             </div>
             
@@ -242,17 +245,33 @@ export default function Checkout() {
               {loadingCheckout ? (
                 <>
                   <Loader2 className="w-6 h-6 animate-spin mr-2" />
-                  Muter Dulu...
+                  Sabar Ya, TRETAN...
                 </>
               ) : (
                 'Bayar Sekarang'
               )}
             </button>
-            <p className="text-center text-xs text-[#1A1A1A]/50 mt-4 font-medium flex items-center justify-center gap-1">
-              <CheckCircle2 className="w-4 h-4" /> Pembayaran Aman via QRIS/Transfer Bank
-            </p>
-          </div>
-        </div>
+            
+            <div className="mt-8 pt-6 border-t border-black/5 text-center">
+              <p className="text-sm font-medium text-[#1A1A1A]/70 mb-4">Bingung atau mau tanya-tanya?</p>
+              <a 
+                href="https://wa.me/6287873550273?text=Halo%20TRETAN%20Yuli%2C%20saya%20mau%20tanya%20soal%20pesanan%20saya" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 text-[#25D366] font-bold hover:underline"
+              >
+                Chat WhatsApp Yuli <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            <p className="text-center text-[10px] text-[#1A1A1A]/40 mt-6 font-medium flex items-center justify-center gap-1 uppercase tracking-widest">
+               <CheckCircle2 className="w-3 h-3" /> Pembayaran Aman & Terverifikasi
+             </p>
+             <p className="text-center text-xs font-black text-[#E85D04] italic mt-4">
+               Nyaman Ongghu, TRETAN 🔥
+             </p>
+           </div>
+         </div>
       </div>
     </div>
   );
