@@ -10,37 +10,35 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.RAJAONGKIR_API_KEY;
     if (!apiKey) {
-      throw new Error('RAJAONGKIR_API_KEY is not set');
+      throw new Error('API Key is not set');
     }
 
-    // Pamekasan City ID is 334 in RajaOngkir Starter
-    const origin = '334';
-    const courier = 'jne'; // Using JNE as default example
-
-    const response = await fetch('https://api.rajaongkir.com/starter/cost', {
+    // Pamekasan City ID is 334
+    // Using Komerce API structure
+    const response = await fetch('https://api.komerce.id/api/v1/shipping/cost', {
       method: 'POST',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
         'key': apiKey,
       },
-      body: new URLSearchParams({
-        origin,
-        destination,
-        weight: weight.toString(),
-        courier,
+      body: JSON.stringify({
+        origin: '334',
+        destination: destination,
+        weight: weight,
+        courier: 'jne,jnt,sicepat', // More couriers for TRETAN
       }),
     });
 
     const data = await response.json();
     
-    if (data.rajaongkir.status.code !== 200) {
-      return NextResponse.json({ error: data.rajaongkir.status.description }, { status: 400 });
+    if (data.status !== 'success') {
+      return NextResponse.json({ error: data.message || 'Gagal ambil ongkir dari Komerce' }, { status: 400 });
     }
 
-    // The frontend should receive a list of services (Reguler, Ekspres, dll.)
-    return NextResponse.json({ costs: data.rajaongkir.results[0].costs });
+    // Komerce structure: data[0].costs
+    return NextResponse.json({ costs: data.data[0].costs });
   } catch (error) {
-    console.error('RajaOngkir Error:', error);
+    console.error('Komerce Error:', error);
     return NextResponse.json({ error: 'Failed to fetch shipping costs' }, { status: 500 });
   }
 }

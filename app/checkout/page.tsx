@@ -169,10 +169,10 @@ export default function Checkout() {
 
             {shippingOptions.length > 0 && (
               <div className="bg-white p-6 rounded-2xl border border-black/5 mt-4 space-y-4">
-                <h3 className="font-bold text-sm tracking-widest text-[#E85D04] uppercase">Pilih Layanan Pengiriman (JNE)</h3>
+                <h3 className="font-bold text-sm tracking-widest text-[#E85D04] uppercase">Pilih Layanan Pengiriman (Komerce)</h3>
                 <div className="space-y-3">
                   {shippingOptions.map((opt: any) => (
-                    <label key={opt.service} className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-colors ${selectedShipping === opt.cost[0].value ? 'border-[#E85D04] bg-[#E85D04]/5' : 'border-black/5 hover:border-black/20'}`}>
+                    <label key={`${opt.label}-${opt.service}`} className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-colors ${selectedShipping === opt.cost[0].value ? 'border-[#E85D04] bg-[#E85D04]/5' : 'border-black/5 hover:border-black/20'}`}>
                       <div className="flex items-center gap-3">
                         <input 
                           type="radio" 
@@ -183,7 +183,7 @@ export default function Checkout() {
                           className="w-5 h-5 accent-[#E85D04]"
                         />
                         <div>
-                          <p className="font-bold">{opt.service}</p>
+                          <p className="font-bold">{opt.label} - {opt.service}</p>
                           <p className="text-sm text-[#1A1A1A]/60">Estimasi: {opt.cost[0].etd} Hari</p>
                         </div>
                       </div>
